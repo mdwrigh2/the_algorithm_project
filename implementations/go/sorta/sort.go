@@ -1,12 +1,12 @@
 package sorta
 
-const MaxInt = int(^uint(0) >> 1) 
+const MaxInt = int(^uint(0) >> 1)
 
 func InsertionSort(A []int) {
 	for j := 1; j < len(A); j++ {
 		key := A[j]
 		var i int
-		for i = j - 1 ; i >= 0 && A[i] > key; i-- {
+		for i = j - 1; i >= 0 && A[i] > key; i-- {
 			A[i+1] = A[i]
 		}
 		A[i+1] = key
