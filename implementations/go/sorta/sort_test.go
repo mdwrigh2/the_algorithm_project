@@ -2,7 +2,7 @@ package sorta
 
 import "testing"
 
-var aTest = [][]int{
+var sortTests = [][]int{
 	[]int{5, 2, 4, 6, 1, 3},
 	[]int{0, -2, 4, 6, 1, 3},
 	[]int{0, 0, 1, 0, 1, 0},
@@ -11,10 +11,25 @@ var aTest = [][]int{
 }
 
 func TestInsertionSort(t *testing.T) {
-	for _, A := range aTest {
+	for _, st := range sortTests {
+		A := make([]int, len(st))
+		copy(A, st)
 		InsertionSort(A)
 		if !IsSorted(A) {
-			t.Errorf("InsertionSort returned %v", A)
+			t.Errorf("sorted %v", st)
+			t.Errorf("   got %v", A)
+		}
+	}
+}
+
+func TestMergeSort(t *testing.T) {
+	for _, st := range sortTests {
+		A := make([]int, len(st))
+		copy(A, st)
+		MergeSort(A,0,len(A))
+		if !IsSorted(A) {
+			t.Errorf("sorted %v", st)
+			t.Errorf("   got %v", A)
 		}
 	}
 }

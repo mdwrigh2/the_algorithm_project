@@ -21,3 +21,42 @@ func IsSorted(A []int) bool {
 	}
 	return true
 }
+
+// TODO: parallelize this?
+// TODO: assumes start < end
+// sort items in [start,end)
+func MergeSort(A []int, start, end int) {
+	half := (start + end) / 2
+	if half > start {
+		MergeSort(A, start, half)
+		MergeSort(A, half, end)
+		Merge(A, start, half, end)
+	}
+}
+
+// TODO: assumes start < half < end
+func Merge(A []int, start, half, end int) {
+	n1 := half - start          // length of first stack
+	n2 := end - half            // length of second stack
+	first := make([]int, n1+1)  // extra item for 'infinity'
+	second := make([]int, n2+1) //   is the end of the lists
+	for i := 0; i < n1; i++ {
+		first[i] = A[start+i]
+	}
+	for j := 0; j < n2; j++ {
+		second[j] = A[half+j]
+	}
+	first[n1] = MaxInt  // marks the end of the stacks
+	second[n2] = MaxInt // saves us from having to bounds-check
+	for k := 0; k < n1+n2; k++ {
+		i := 0
+		j := 0
+		if first[i] < second[j] {
+			A[k] = first[i]
+			i++
+		} else {
+			A[k] = second[j]
+			j++
+		}
+	}
+}
