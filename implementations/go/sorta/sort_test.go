@@ -33,3 +33,15 @@ func TestMergeSort(t *testing.T) {
 		}
 	}
 }
+
+func TestBubbleSort(t *testing.T) {
+	for _, st := range sortTests {
+		A := make([]int, len(st))
+		copy(A, st)
+		BubbleSort(A)
+		if !IsSorted(A) {
+			t.Errorf("sorted %v", st)
+			t.Errorf("   got %v", A)
+		}
+	}
+}

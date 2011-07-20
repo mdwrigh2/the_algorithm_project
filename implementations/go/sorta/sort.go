@@ -60,3 +60,13 @@ func Merge(A []int, start, half, end int) {
 		}
 	}
 }
+
+func BubbleSort(A []int) {
+	for i := 0 ; i < len(A) ; i++ {
+		for j := i ; j > 0 ; j-- {
+			if A[j-1] > A[j] {
+				A[j-1], A[j] = A[j], A[j-1]
+			}
+		}
+	}
+}
