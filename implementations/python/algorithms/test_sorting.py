@@ -12,7 +12,10 @@ random_arrays = [([41, -98, 10, -25, -15, 85, -38, -77, -88, -29],
                  ([29, -37, -100, -71, -71, 76, -4, 94, -55, 28],
                   [-100, -71, -71, -55, -37, -4, 28, 29, 76, 94])]
 
-class InsertionSortTest(unittest.TestCase):
-    def test_sort(self):
+class SortingTests(unittest.TestCase):
+    def test_insertion_sort(self):
+        for arr in random_arrays:
+            self.assertEquals(insertion_sort(arr[0]), arr[1])
+    def test_merge_sort(self):
         for arr in random_arrays:
             self.assertEquals(insertion_sort(arr[0]), arr[1])
