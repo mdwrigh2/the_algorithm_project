@@ -1,5 +1,5 @@
 import unittest
-from sorting import insertion_sort
+from sorting import insertion_sort, bubble_sort, merge_sort
 
 random_arrays = [([41, -98, 10, -25, -15, 85, -38, -77, -88, -29],
                   [-98, -88, -77, -38, -29, -25, -15, 10, 41, 85]),
@@ -18,4 +18,7 @@ class SortingTests(unittest.TestCase):
             self.assertEquals(insertion_sort(arr[0]), arr[1])
     def test_merge_sort(self):
         for arr in random_arrays:
-            self.assertEquals(insertion_sort(arr[0]), arr[1])
+            self.assertEquals(merge_sort(arr[0]), arr[1])
+    def test_bubble_sort(self):
+        for arr in random_arrays:
+            self.assertEquals(bubble_sort(arr[0]), arr[1])
