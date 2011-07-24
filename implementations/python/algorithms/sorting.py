@@ -26,6 +26,7 @@ def insertion_sort(arr):
         sorted_arr[j+1] = key
     return sorted_arr
 
+# RUNTIME: O(n lg(n)), where n = len(arr)
 def merge_sort(arr):
     size = len(arr)
     # Base case!
@@ -56,6 +57,7 @@ def merge_sort(arr):
             i += 1
     return sorted_array
 
+# RUNTIME: O(n^2), where n = len(arr)
 def bubble_sort(arr):
     sorted_arr = arr[:]
     for i in range(len(sorted_arr)-1):
