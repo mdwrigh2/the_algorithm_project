@@ -1,5 +1,5 @@
 import unittest
-from arrays import maximum_subarray
+from array import maximum_subarray
 
 class ArrayTests(unittest.TestCase):
     def test_maximum_subarray(self):
