@@ -1,7 +1,9 @@
 include $(GOROOT)/src/Make.inc
 
-TARG=bipartite
+TARG=graph
 GOFILES=\
-	bipartite.go\
+	list.go\
+	digraph.go\
+	bipartition.go\
 
 include $(GOROOT)/src/Make.pkg
