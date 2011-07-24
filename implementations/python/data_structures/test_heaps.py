@@ -3,11 +3,11 @@ from heaps import MinHeap, MaxHeap
 
 class MinHeapTest(unittest.TestCase):
 
-    def testInitialize(self):
+    def test_initialize(self):
         heap = MinHeap([2,4,6,8,10,1,3,5,7,9])
         self.assertEquals(heap.get(0), 1)
 
-    def testHeapInvariant(self):
+    def test_heap_invariant(self):
         heap = MinHeap([2,4,6,8,10,1,3,5,7,9])
         for k in range(len(heap)):
             if 2*k+1 < len(heap):
@@ -18,11 +18,11 @@ class MinHeapTest(unittest.TestCase):
 
 class MaxHeapTest(unittest.TestCase):
 
-    def testInitialize(self):
+    def test_initialize(self):
         heap = MaxHeap([2,4,6,8,10,1,3,5,7,9])
         self.assertEquals(heap.get(0), 10)
 
-    def testHeapInvariant(self):
+    def test_heap_invariant(self):
         heap = MaxHeap([2,4,6,8,10,1,3,5,7,9])
         for k in range(len(heap)):
             if 2*k+1 < len(heap):
