@@ -2,7 +2,7 @@
 import sys
 import unittest
 
-from algorithms import test_sorting
+from algorithms import test_sorting, test_arrays
 from data_structures import test_heaps
 
 loader = unittest.TestLoader()
@@ -12,6 +12,7 @@ data_structures["heaps"] = loader.loadTestsFromModule(test_heaps)
 
 algorithms = {}
 algorithms["sorting"] = loader.loadTestsFromModule(test_sorting)
+algorithms["arrays"] = loader.loadTestsFromModule(test_arrays)
 
 data_structures_suite = unittest.TestSuite()
 for suite in data_structures.values():
