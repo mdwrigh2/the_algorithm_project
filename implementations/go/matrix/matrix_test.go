@@ -79,6 +79,27 @@ func TestSquareMatrixAdd(t *testing.T) {
 	}
 }
 
+func TestSquareMatrixSub(t *testing.T) {
+	// identity + identity matrix
+	C := SquareMatrixSub(pentMatrix, pintMatrix, 4)
+	if !C.Equal(pintMatrix,4,4) {
+		t.Errorf("SquareMatrixSub got:\n%v expected:\n%v", 
+			C.String(4,4),pintMatrix.String(4,4))
+	}
+	// test identity matrix
+	C = SquareMatrixSub(tastMatrix, pintMatrix, 4)
+	if !C.Equal(testMatrix,4,4) {
+		t.Errorf("SquareMatrixSub got:\n%v expected:\n%v", 
+			C.String(4,4),testMatrix.String(4,4))
+	}
+	// test arbitrary matrix
+	C = SquareMatrixSub(fastMatrix, pestMatrix, 4)
+	if !C.Equal(testMatrix,4,4) {
+		t.Errorf("SquareMatrixSub got:\n%v expected:\n%v", 
+			C.String(4,4),testMatrix.String(4,4))
+	}
+}
+
 func TestSquareMatrixMultiply(t *testing.T) {
 	// test identity matrix
 	C := SquareMatrixMultiply(testMatrix, pintMatrix, 4)
@@ -105,6 +126,21 @@ func TestSquareMatrixMultiplyRecursive(t *testing.T) {
 	C = SquareMatrixMultiplyRecursive(testMatrix, pestMatrix, 4)
 	if !C.Equal(pastMatrix,4,4) {
 		t.Errorf("SquareMatrixMultiplyRecursive got:\n%v expected:\n%v", 
+			C.String(4,4),pastMatrix.String(4,4))
+	}
+}
+
+func TestSquareMatrixMultiplyStrassen(t *testing.T) {
+	// test identity matrix
+	C := SquareMatrixMultiplyStrassen(testMatrix, pintMatrix, 4)
+	if !C.Equal(testMatrix,4,4) {
+		t.Errorf("SquareMatrixMultiplyStrassen got:\n%v expected:\n%v", 
+			C.String(4,4),testMatrix.String(4,4))
+	}
+	// test arbitrary matrix
+	C = SquareMatrixMultiplyStrassen(testMatrix, pestMatrix, 4)
+	if !C.Equal(pastMatrix,4,4) {
+		t.Errorf("SquareMatrixMultiplyStrassen got:\n%v expected:\n%v", 
 			C.String(4,4),pastMatrix.String(4,4))
 	}
 }
