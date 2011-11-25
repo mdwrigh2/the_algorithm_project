@@ -7,7 +7,17 @@ package linkedlist
 type Data int
 
 func (d *Data) eq(a *Data) bool {
+	if a == nil || d == nil {
+		return false
+	}
 	return *d == *a
+}
+
+// helper
+func NewData(i Data) *Data {
+	d := new(Data)
+	*d = i
+	return d
 }
 
 // SINGLY LINKED LIST
@@ -138,11 +148,62 @@ func DeleteList(head **Node) bool {
 	return true
 }
 
+// This is more useful in C, where every pointer isnt initialized to nil
 func NewStack(stack **Node) bool {
 	if stack == nil { // bogus pointer, can't do
 		return false
 	}
 	*stack = nil
+	return true
+}
+
+func Push(stack **Node, d *Data) bool {
+	if stack == nil { // bogus pointer, can't do
+		return false
+	}
+	item := NewNode(d);
+	if *stack == nil {
+		*stack = item
+		return true
+	}
+	item.next = *stack
+	(*stack).prev = item // only for doubly-linked list
+	*stack = item
+	return true
+}
+
+// in C a return of nil might mean failure, however in go
+// we are accepting nil as a valid *Data for our list
+func Pop(stack **Node) (d *Data, ok bool) {
+	if stack == nil { // bogus pointer, can't do
+		return nil,false
+	}
+	if *stack == nil { // empty list, can't pop
+		return nil,false
+	}
+	item := *stack
+	*stack = item.next
+	if *stack != nil {
+		(*stack).prev = nil // only for doubly-linked list
+	}
+	data := item.data
+	// free(item) but we're garbage-collected so not needed
+	return data, true
+}
+
+// This function is also pretty useless in Go, but useful in C
+func DeleteStack(stack **Node) bool {
+	if stack == nil { // bogus stack, can't do
+		return false
+	}
+	for *stack != nil {
+		next := (*stack).next
+		if next != nil {
+			next.prev = nil // only for doubly-linked list
+		}
+		// free(current) but we're garbage-collected so not needed
+		*stack = next
+	}
 	return true
 }
 

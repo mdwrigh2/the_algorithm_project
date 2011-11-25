@@ -92,17 +92,14 @@ func TestFind(t *testing.T) {
 	}
 	// test one-item list
 	head := NewNodeData(1)
-	find := new(Data)
-	*find = 1
-	if found := Find(head,find) ; found != head {
+	if found := Find(head,NewData(1)) ; found != head {
 		t.Errorf("Find() failed on one-item list")
 	}
 	// test two-item list
 	head = NewNodeData(1)
 	tail := NewNodeData(2)
-	*find = 2
 	head.next = tail
-	if found := Find(head,find) ; found != tail {
+	if found := Find(head,NewData(2)) ; found != tail {
 		t.Errorf("Find() failed on two-item list")
 	}
 }
@@ -174,6 +171,88 @@ func TestDeleteList(t *testing.T) {
 	head.next = tail
 	if !DeleteList(&head) || head != nil {
 		t.Errorf("DeleteList() failed on two-item list")
+	}
+}
+
+func TestNewStack(t *testing.T) {
+	// test bogus pointer case
+	if NewStack(nil) {
+		t.Errorf("NewStack(nil) got true, expected false")
+	}
+	// test empty list
+	head := new(Node)
+	if !NewStack(&head) || head != nil {
+		t.Errorf("NewStack() failed on existing list")
+	}
+}
+
+func TestPush(t *testing.T) {
+	// test failure case (no list at all, bogus head ptr)
+	if Push(nil, nil) {
+		t.Errorf("Prepend(nil,nil) got true, expected false")
+	}
+	// test empty list case (*head == nil)
+	var head *Node
+	Push(&head, nil)
+	if head == nil {
+		t.Errorf("Push() failed on empty list")
+	}
+	// test on actual list
+	head = new(Node)
+	old := head
+	Prepend(&head, nil)
+	if head == nil || head.next != old || head.next.next != nil || head.next.prev != head {
+		t.Errorf("Push() failed on list")
+	}
+}
+
+func TestPop(t *testing.T) {
+	// test bogus list case
+	if _, ok := Pop(nil) ; ok {
+		t.Errorf("Pop(nil) got true, expected false")
+	}
+	// test empty list case
+	var head *Node
+	if _, ok := Pop(&head) ; ok || head != nil {
+		t.Errorf("Pop() succeeded on empty list")
+	}
+	// test one-item list
+	head = NewNodeData(1)
+	if d, ok := Pop(&head) ; !ok || !NewData(1).eq(d) || head != nil {
+		t.Errorf("Pop() failed on one-item list")
+	}
+	// test two-item list
+	head = NewNodeData(1)
+	tail := NewNodeData(2)
+	head.next = tail
+	tail.prev = head
+	if d, ok := Pop(&head) ; !ok || !NewData(1).eq(d) || head != tail || head.prev != nil {
+		t.Errorf("Pop() failed on two-item list")
+	}
+}
+
+func TestDeleteStack(t *testing.T) {
+	// test bogus list case
+	if DeleteStack(nil) {
+		t.Errorf("DeleteStack(nil) got true, expected false")
+	}
+	// test empty list case
+	var head *Node
+	if !DeleteStack(&head) {
+		t.Errorf("DeleteStack() failed on empty list")
+	}
+	// test one-item list
+	head = NewNodeData(1)
+	if !DeleteStack(&head) || head != nil {
+		t.Errorf("DeleteStack() failed on one-item list")
+	}
+	// test two-item list
+	head = NewNodeData(1)
+	tail := NewNodeData(2)
+	head.next = tail
+	tail.prev = head
+	if !DeleteStack(&head) || head != nil {
+		t.Errorf("DeleteStack() failed on two-item list")
 	}
 }
 
