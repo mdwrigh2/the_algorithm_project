@@ -117,6 +117,11 @@ func TestDelete(t *testing.T) {
 	if !Delete(&head,nil) {
 		t.Errorf("Delete(&head,nil) got false, expected true")
 	}
+	// test empty list
+	tail := new(Node)
+	if Delete(&head,tail) {
+		t.Errorf("Delete() succeeded on empty list")
+	}
 	// test delete head (one-item list) case
 	head = new(Node)
 	if !Delete(&head,head) || head != nil {
@@ -124,7 +129,7 @@ func TestDelete(t *testing.T) {
 	}
 	// test delete not in list
 	head = new(Node)
-	tail := new(Node)
+	tail = new(Node)
 	old := head
 	if Delete(&head,tail) || head != old {
 		t.Errorf("Delete(&head,tail) failed on delete not in list")
@@ -136,6 +141,30 @@ func TestDelete(t *testing.T) {
 	head.next = tail
 	if !Delete(&head,tail) || head != old || head.next != nil {
 		t.Errorf("Delete(&head,tail) failed on two-item list")
+	}
+}
+
+func TestDeleteList(t *testing.T) {
+	// test bogus list case
+	if DeleteList(nil) {
+		t.Errorf("DeleteList(nil) got true, expected false")
+	}
+	// test empty list
+	var head *Node
+	if !DeleteList(&head) || head != nil {
+		t.Errorf("DeleteList() failed on empty list")
+	}
+	// test delete head (one-item list) case
+	head = new(Node)
+	if !DeleteList(&head) || head != nil {
+		t.Errorf("DeleteList() failed on one-item list")
+	}
+	// test delete tail (two-item list) case
+	head = new(Node)
+	tail := new(Node)
+	head.next = tail
+	if !DeleteList(&head) || head != nil {
+		t.Errorf("DeleteList() failed on two-item list")
 	}
 }
 

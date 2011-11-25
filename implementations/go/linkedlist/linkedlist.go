@@ -112,3 +112,18 @@ func Delete(head **Node, delete *Node) bool {
 	return false // didn't find it
 }
 
+// Bit of a useless function, but in C this is necessary
+func DeleteList(head **Node) bool {
+	if head == nil { // bogus head, no list
+		return false
+	}
+	current := *head
+	for current != nil {
+		next := current.next
+		// free(current) but we're garbage-collected so not needed
+		current = next
+	}
+	*head = nil // equivalent to this whole function
+	return true
+}
+
