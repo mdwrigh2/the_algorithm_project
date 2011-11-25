@@ -39,7 +39,7 @@ func TestPrepend(t *testing.T) {
 	head = new(Node)
 	old := head
 	Prepend(&head, nil)
-	if head == nil || head.next != old || head.next.next != nil {
+	if head == nil || head.next != old || head.next.next != nil || head.next.prev != head {
 		t.Errorf("Prepend() failed on list")
 	}
 }
@@ -59,7 +59,7 @@ func TestAppend(t *testing.T) {
 	head = new(Node)
 	old := head
 	Append(&head, nil)
-	if head != old || head.next == nil || head.next.next != nil {
+	if head != old || head.next == nil || head.next.next != nil || head.next.prev != head {
 		t.Errorf("Append() failed on list")
 	}
 }
@@ -80,7 +80,7 @@ func TestAppendTail(t *testing.T) {
 	tail = head
 	old := head
 	AppendTail(&head, &tail, nil)
-	if head != old || head == tail || head.next != tail || tail.next != nil {
+	if head != old || head == tail || head.next != tail || tail.next != nil || tail.prev != head {
 		t.Errorf("AppendTail() failed on list")
 	}
 }
@@ -133,6 +133,15 @@ func TestDelete(t *testing.T) {
 	old := head
 	if Delete(&head,tail) || head != old {
 		t.Errorf("Delete(&head,tail) failed on delete not in list")
+	}
+	// test delete head (two-item list) case
+	head = new(Node)
+	tail = new(Node)
+	old = head
+	head.next = tail
+	tail.prev = head
+	if !Delete(&head,head) || head != tail || head.next != nil || head.prev != nil {
+		t.Errorf("Delete(&head,head) failed on two-item list")
 	}
 	// test delete tail (two-item list) case
 	head = new(Node)

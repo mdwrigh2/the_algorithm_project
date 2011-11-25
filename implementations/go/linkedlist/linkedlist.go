@@ -39,6 +39,9 @@ func Prepend(head **Node, d *Data) bool {
 	}
 	item := NewNode(d)
 	item.next = *head // handles empty or full lists
+	if *head != nil { 
+		(*head).prev = item // only for doubly-linked lists
+	}
 	*head = item
 	return true
 }
@@ -59,6 +62,7 @@ func Append(head **Node, d *Data) bool {
 		return true
 	}
 	previous.next = item
+	item.prev = previous // only for doubly-linked lists
 	return true
 }
 
@@ -74,6 +78,7 @@ func AppendTail(head **Node, tail **Node, d *Data) bool {
 		return true
 	}
 	(*tail).next = item
+	item.prev = *tail // only for doubly-linked lists
 	*tail = item
 	return true
 }
@@ -98,12 +103,18 @@ func Delete(head **Node, delete *Node) bool {
 	}
 	if *head == delete {
 		*head = delete.next
+		if *head != nil {
+			(*head).prev = nil // only for doubly-linked lists
+		}
 		return true
 	}
 	current := *head
 	for current != nil {
 		if current.next == delete {
 			current.next = delete.next
+			if current.next != nil {
+				current.next.prev = current // only for doubly-linked lists
+			}
 			// free(delete) but we're garbage-collected so not needed
 			return true
 		}
@@ -126,4 +137,13 @@ func DeleteList(head **Node) bool {
 	*head = nil // equivalent to this whole function
 	return true
 }
+
+func NewStack(stack **Node) bool {
+	if stack == nil { // bogus pointer, can't do
+		return false
+	}
+	*stack = nil
+	return true
+}
+
 
